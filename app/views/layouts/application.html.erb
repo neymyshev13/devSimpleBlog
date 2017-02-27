@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BLOG</title>
+    <%= csrf_meta_tags %>
+
+     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <div class="container">
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="background-color: #e3f2fd;">
+   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="<%= posts_path %>">Статьи</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#">Контакты <span class="sr-only">(current)</span></a>
+    </div>
+  </div>
+
+  <%= link_to 'Новая статья', new_post_path, class: 'btn btn-outline-primary pull-xs-right' %>
+</nav>
+</div>
+
+
+  <div class="container main">
+    <div class="row">
+      <div class="col-md-12">
+        <% flash.each do |name, message| %>
+          <div class="alert alert-<%= name %>" >
+            <%= message %>
+          </div>
+          <% end %>
+
+        </div>
+      </div>
+
+  <div class="row">
+    <div class="col-md-9">
+      <%= yield %>
+    </div>
+    <div class="col-md-3">
+      <% tag_cloud(Tag.counts, %w{tag tag2 tag4 tag5}) do |tag, css_class| %>
+        <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+      <% end %>
+    </div>
+  </div>
+
+
+
+  </body>
+</html>
